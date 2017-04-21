@@ -22,6 +22,16 @@ public class HandWriting extends PApplet{
 		drawboard();
 	}
 	
+	public void mouseDragged()
+	{
+		int x=pmouseX;
+		int y=pmouseY;
+		
+		x=(int)(x/boxsize);
+		y=(int)(y/boxsize);
+		toggle(x,y);
+	}
+	
 	public void keyPressed()
 	{
 		if(key=='c')
@@ -36,6 +46,7 @@ public class HandWriting extends PApplet{
 		}
 	}
 	
+	//Toggles a single tile to be green
 	void toggle(int x,int y)
 	{
 		System.out.println(x);
