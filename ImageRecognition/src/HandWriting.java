@@ -36,6 +36,15 @@ public class HandWriting extends PApplet{
 		}
 	}
 	
+	void toggle(int x,int y)
+	{
+		System.out.println(x);
+		if(x>-1 && y>-1 && x<rows && y<cols)
+		{
+			board[y][x]=true;
+	    }
+	}
+	
 	public void draw()
 	{
 		drawboard();//draw the board
