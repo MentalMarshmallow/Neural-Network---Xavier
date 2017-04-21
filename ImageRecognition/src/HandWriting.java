@@ -32,6 +32,17 @@ public class HandWriting extends PApplet{
 		toggle(x,y);
 	}
 	
+	public void mouseClicked()
+	{
+		int x=pmouseX;
+		int y=pmouseY;
+		
+		x=(int)(x/boxsize);
+		y=(int)(y/boxsize);
+		
+		toggle(x,y);
+	}
+	
 	public void keyPressed()
 	{
 		if(key=='c')
