@@ -10,7 +10,6 @@ public class neural_network {
     final ArrayList<Node> outputLayer = new ArrayList<Node>();
     final Node bias = new Node();
     final int[] layers;
-    final int randomWeightMultiplier = 1;
 
     final double epsilon = 0.00000000001;
     final double learningRate = 0.9f;
@@ -94,10 +93,48 @@ public class neural_network {
     	}
     }//End neural_network constructor
     
-    //get random
+    //get random value
     double getRandom()
     {
     	return (rand.nextDouble() * 2 - 1);//gets value between 0 and 1
     }
     
+   /**
+   * There is equally many nodes in the input layer as there are input variables
+   */
+   public void setInput(double inputs[]) 
+   {
+       for (int i = 0; i < inputLayer.size(); i++) 
+       {
+           inputLayer.get(i).setOutput(inputs[i]);//puts each input to an individual node
+       }
+   }
+   
+   public double[] getOutput() 
+   {
+       double[] outputs = new double[outputLayer.size()];
+       
+       for (int i = 0; i < outputLayer.size(); i++)
+       {
+    	   outputs[i] = outputLayer.get(i).getOutput();
+       }
+       
+       return outputs;
+   }
+   
+   /**
+    * Calculate the output of the neural network based on the input The forward propagation
+    */
+   public void activate() 
+   {
+       for (Node n : hiddenLayer)
+       {
+    	   n.calculateOutput();
+       }
+       for (Node n : outputLayer)
+       {
+    	   n.calculateOutput();
+       }
+   }
+   
 }
