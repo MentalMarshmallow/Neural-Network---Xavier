@@ -20,14 +20,14 @@ public class Neuron {
      */
     public void calculateOutput(){
         double s = 0;
-        for(Connection con : Inconnections){
+        for(Connection con : Inconnections){//Getting the total weight*output for the neuron
             Neuron leftNeuron = con.getFromNeuron();
             double weight = con.getWeight();
             double a = leftNeuron.getOutput(); //output from previous layer
              
             s = s + (weight*a);
         }
-        s = s + (biasConnection.getWeight()*bias);
+        s = s + (biasConnection.getWeight()*bias);//This can shift the weight to get the correct output
          
         output = sigmoid(s);
     }

@@ -9,8 +9,8 @@ public class Connection {
     final public int id; // auto increment, starts at 0
  
     public Connection(Neuron fromN, Neuron toN) {
-        leftNeuron = fromN;
-        rightNeuron = toN;
+        leftNeuron = fromN;//In neuron
+        rightNeuron = toN;//out neuron
         id = counter;
         counter++;
     }
