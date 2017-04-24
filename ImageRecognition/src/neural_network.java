@@ -3,7 +3,7 @@ import java.util.*;
 
 public class neural_network {
 	
-	final boolean isTrained = true;
+	final boolean isTrained = false;
     final Random rand = new Random();//Random value
     final ArrayList<Node> inputLayer = new ArrayList<Node>();
     final ArrayList<Node> hiddenLayer = new ArrayList<Node>();
@@ -135,6 +135,48 @@ public class neural_network {
        {
     	   n.calculateOutput();
        }
+   }
+   
+   /**
+    * train the neural network till the minError is reached or the maxSteps is exceeded
+    */
+   void run(int maxSteps, double minError)
+   {
+	   int i;
+	   double error = 1;//Set to maximum Error
+	   
+	   for(i=0 ;i<maxSteps && error>minError; i++)
+	   {
+		   error=0;//reset error
+		   
+		   for(int k=0;k<inputs.length;k++)//Set the inputs for the nodes
+		   {
+			   setInput(inputs[k]);
+			   
+			   activate();
+			   
+			   output = getOutput();
+			   resultOutputs[k] = output;//Puts the results of the input in the output array
+			   
+			   /*
+			    * The error is squared to expect the exponential curve in the 
+			    * resultOutputs compared to the expectedOutputs
+			    */
+			   for(int j=0;j<expectedOutputs[k].length;j++)//Go through the outputs
+			   {
+				   double err=Math.pow(output[j] - expectedOutputs[k][j], 2);//Squares the (resultOutput - expectedOutput)
+				   error += err;
+			   }
+			   
+		   }
+			
+		   /*
+		    * Propagate what we expected through what we actually got.
+		    * This partially improves the results of the outputs
+		    */
+		   applyBackpropagation(expectedOutputs[p]); 
+	   }
+	   
    }
    
 }
