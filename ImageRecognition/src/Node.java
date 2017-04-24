@@ -6,9 +6,9 @@ import java.util.HashMap;
 
 public class Node {
 	
-	static int counter=0;// This is the id of each of the neurons that will increment each time a new node is created
+	static int counter=0;// This is the id of each of the Nodes that will increment each time a new node is created
 	final public int id;
-	Connection biasConnection;//Connection with a bias neuron set up in the neural network class
+	Connection biasConnection;//Connection with a bias Node set up in the neural network class
 	double bias=-1;
 	double output;
 	
@@ -33,7 +33,7 @@ public class Node {
 	{
 		double s = 0;//Sigmoid total for the node
 		
-		for(Connection con : InConnections)//Getting the total weight*output for the neuron
+		for(Connection con : InConnections)//Getting the total weight*output for the Node
 		{
 			Node prevNode = con.getFromNode();
 			double weight = con.getWeight();
@@ -60,15 +60,35 @@ public class Node {
         return bias;
     }
 	
-	public ArrayList<Connection> getAllInConnections(){
-        return InConnections;
-    }
-	
     public double getOutput() {
         return output;
     }
     
     public void setOutput(double o){
         output = o;
+    }
+    
+    public ArrayList<Connection> getAllInConnections(){
+        return InConnections;
+    }
+    
+    //Adds connections for an ArrayList of nodes
+    public void addInConnections(ArrayList<Node> inNodes){
+        for(Node n: inNodes)
+        {
+            Connection con = new Connection(n,this);
+            InConnections.add(con);
+            findConnection.put(n.id, con);
+        }
+    }
+    
+    public void addInConnection(Connection con){
+        InConnections.add(con);
+    }
+    
+    public void addBiasConnection(Node n){
+        Connection con = new Connection(n,this);
+        biasConnection = con;
+        InConnections.add(con);
     }
 }
