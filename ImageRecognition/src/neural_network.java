@@ -66,7 +66,38 @@ public class neural_network {
     			System.out.println("!Error NeuralNetwork init");
     		}
     		
+    		//initialize random weights
+    		for (Node node : hiddenLayer) 
+    		{
+                ArrayList<Connection> connections = node.getAllInConnections();
+                
+                for (Connection conn : connections) 
+                {
+                    double newWeight = getRandom();
+                    conn.setWeight(newWeight);
+                }
+            }
+            for (Node node : outputLayer) {
+                ArrayList<Connection> connections = node.getAllInConnections();
+                
+                for (Connection conn : connections) 
+                {
+                    double newWeight = getRandom();
+                    conn.setWeight(newWeight);
+                }
+            }
+            
+            //reset id counters
+            Node.counter=0;
+            Connection.counter=0;
+    		
     	}
     }//End neural_network constructor
+    
+    //get random
+    double getRandom()
+    {
+    	return (rand.nextDouble() * 2 - 1);//gets value between 0 and 1
+    }
     
 }
