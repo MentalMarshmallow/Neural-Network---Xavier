@@ -1,9 +1,0 @@
-C:\Users\Vimal Jain\Desktop\Assignment 3\BPSimplified_src\BPSimplified\bin\Debug\BPSimplified.exe.config
-C:\Users\Vimal Jain\Desktop\Assignment 3\BPSimplified_src\BPSimplified\bin\Debug\BPSimplified.exe
-C:\Users\Vimal Jain\Desktop\Assignment 3\BPSimplified_src\BPSimplified\bin\Debug\BPSimplified.pdb
-C:\Users\Vimal Jain\Desktop\Assignment 3\BPSimplified_src\BPSimplified\obj\Debug\BPSimplified.csprojResolveAssemblyReference.cache
-C:\Users\Vimal Jain\Desktop\Assignment 3\BPSimplified_src\BPSimplified\obj\Debug\BPSimplified.NeuralDemo.resources
-C:\Users\Vimal Jain\Desktop\Assignment 3\BPSimplified_src\BPSimplified\obj\Debug\BPSimplified.Properties.Resources.resources
-C:\Users\Vimal Jain\Desktop\Assignment 3\BPSimplified_src\BPSimplified\obj\Debug\BPSimplified.csproj.GenerateResource.Cache
-C:\Users\Vimal Jain\Desktop\Assignment 3\BPSimplified_src\BPSimplified\obj\Debug\BPSimplified.exe
-C:\Users\Vimal Jain\Desktop\Assignment 3\BPSimplified_src\BPSimplified\obj\Debug\BPSimplified.pdb
