@@ -6,14 +6,14 @@ import java.util.HashMap;
 
 public class Node {
 	
-	static int counter=0;// This is the id of each of the neurons that will increment each time a new neuron is created
+	static int counter=0;// This is the id of each of the neurons that will increment each time a new node is created
 	final public int id;
 	Connection biasConnection;//Connection with a bias neuron set up in the neural network class
 	double bias=-1;
 	double output;
 	
 	ArrayList<Connection> InConnections = new ArrayList<Connection>();//Input connections
-	HashMap<Integer,Connection> findConnection = new HashMap<Integer,Connection>();//Find the connection based on the id of the neuron
+	HashMap<Integer,Connection> findConnection = new HashMap<Integer,Connection>();//Find the connection based on the id of the connection
 	
 	public Node()
 	{
