@@ -1,6 +1,4 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Scanner;
+import java.io.IOException;
 
 import processing.core.PApplet;
 /**
@@ -13,9 +11,16 @@ public class HandWriting extends PApplet{
 	int pixels[][];//These are the pixels used by the board converted into 1 and 0
 	int rows,cols;
 	float boxsize;
+	fileIO file;
 	
 	public void setup()
 	{
+		file = new fileIO("LetterInputs.txt","LetterOutputs.txt");
+    	double [] numbers = file.getLine(2);//Saves the numbers from the file into an array
+    	
+    	for(double i : numbers)
+    		System.out.println(i);
+    	
 		rows=60;
 		cols=60;
 		stroke(0,69,255);
@@ -80,6 +85,15 @@ public class HandWriting extends PApplet{
 				}
 			}
 			System.out.println("Saved the board");
+			try
+			{
+				file.writePixels(pixels,0);
+			}
+			catch(IOException e)
+			{
+				System.out.println("File not found.");
+	    		System.exit(0);
+			}
 		}
 	}
 	
@@ -126,12 +140,6 @@ public class HandWriting extends PApplet{
 	public static void main(String[] args) {
 		String[] a = {"MAIN"};
         PApplet.runSketch( a, new HandWriting());
-    	
-    	fileIO file = new fileIO("LetterInputs.txt","LetterOutputs.txt");
-    	double [] numbers = file.getLine(2);//Saves the numbers from the file into an array
-    	
-    	for(double i : numbers)
-    		System.out.println(i);
         
     	/*
         neural_network nn = new neural_network(2, 4, 1);
