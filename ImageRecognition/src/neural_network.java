@@ -253,6 +253,7 @@ public class neural_network {
 		   }
 		   
 	   }
-   }
+	   
+   }//End backPropagation
    
-}
+}//End Neural Network

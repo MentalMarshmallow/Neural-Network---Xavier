@@ -10,6 +10,7 @@ import processing.core.PApplet;
 public class HandWriting extends PApplet{
 	boolean temp[][];
 	boolean board[][];
+	int pixels[][];//These are the pixels used by the board converted into 1 and 0
 	int rows,cols;
 	float boxsize;
 	
@@ -21,7 +22,8 @@ public class HandWriting extends PApplet{
 		fill(0);
 		board=new boolean[rows][cols];
 		temp=new boolean[rows][cols];
-		boxsize=200/rows;
+		pixels=new int[rows][cols];
+		boxsize=(width/rows)/2;
 		
 		drawboard();
 	}
@@ -47,9 +49,10 @@ public class HandWriting extends PApplet{
 		toggle(x,y);
 	}
 	
+	//Used to clear the writing screen
 	public void keyPressed()
 	{
-		if(key=='c')
+		if(key=='c')//Clears the board
 		{
 			for(int i=0; i<rows;i++)
 			{
@@ -58,6 +61,25 @@ public class HandWriting extends PApplet{
 					board[i][j]=false;
 				}
 			}
+		}
+		else if(key=='s')//Saves the pixels of the board into an integer array
+		{
+			for(int i=0; i<rows;i++)
+			{
+				for(int j=0; j<cols;j++)
+				{
+					if(board[i][j])//If the board says true
+					{
+						pixels[i][j]=1;
+					}
+					else
+					{
+						pixels[i][j]=0;
+					}
+				
+				}
+			}
+			System.out.println("Saved the board");
 		}
 	}
 	
@@ -72,8 +94,8 @@ public class HandWriting extends PApplet{
 	
 	public void draw()
 	{
-		drawboard();//draw the board
-		
+		drawboard();//draw the writing board
+		//draw
 	}
 	
 	void drawboard()
@@ -105,6 +127,8 @@ public class HandWriting extends PApplet{
 		String[] a = {"MAIN"};
         PApplet.runSketch( a, new HandWriting());
         
+        
+        
         Scanner scan = null;
     	try
     	{
@@ -122,10 +146,8 @@ public class HandWriting extends PApplet{
     		System.exit(0);
     	}
     	
-    	fileIO file = new fileIO(scan);
-    	double [] numbers = file.newLine();
-    	for(double i:numbers)
-    	System.out.println(i);
+    	fileIO file = new fileIO();
+    	double [] numbers = file.newLine(scan);//Saves the numbers from the file into an array
         
     	/*
         neural_network nn = new neural_network(2, 4, 1);
