@@ -7,7 +7,8 @@ import java.util.*;
 
 public class fileIO {
 	
-	Scanner scan;
+	Scanner scanO;//Output scanner
+	Scanner scanI;//Input scanner
 	File LetterOutput;//Expected Letter Output file
 	File LetterInput;//Inputs file for a trained network
 	
@@ -23,14 +24,30 @@ public class fileIO {
 		{
 			System.out.println("Input file not found");
 		}
+		
+		//Add the input and output scanners
+		try
+		{
+    		scanO = new Scanner(LetterOutput);
+    		scanI = new Scanner(LetterInput);
+    		
+    	}//end try
+    	catch(FileNotFoundException e)
+    	{
+    		System.out.println("File not found.");
+    		System.exit(0);
+    	}
+		
 	}
 	
-	//Returns an array of integers for the line
-	public double[] newLine(Scanner scan)
+	//Returns an array of integers from the outputLetters file at the line outputNumber
+	public double[] getLine(int outputNumber)
 	{
-		this.scan = scan;
-		
-		String currentLine = scan.nextLine();
+		String currentLine="";
+		for(int i=0;i<outputNumber;i++)
+		{
+			currentLine = scanO.nextLine();
+		}
 		
 		String line[] = currentLine.split(" ");//Splits the line up
 		double[] numbers = new double[line.length];//An integer array the size of line
@@ -43,9 +60,11 @@ public class fileIO {
 		return numbers;
 	}
 	
-	public void writeLine(Scanner scan,int lineNumber)
-	{
-		this.scan = scan;
+	//Write a 2d array of pixels at the space of inputNumber
+	public void writePixels(int pixels[][],int inputNumber)
+	{	
+		int rows=60;
+		int cols=60;
 		
 		
 	}

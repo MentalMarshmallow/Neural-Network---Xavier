@@ -126,28 +126,12 @@ public class HandWriting extends PApplet{
 	public static void main(String[] args) {
 		String[] a = {"MAIN"};
         PApplet.runSketch( a, new HandWriting());
-        
-        
-        
-        Scanner scan = null;
-    	try
-    	{
-    		String filename= "LetterOutputs.txt";	//Filename hardcoded here
-    		File f = new File(filename); 			//Creates a file pointer to the file
-    		scan = new Scanner(f);			//Create a scanner and point it to nothing
-    		if(f.canRead())
-    		{
-    			System.out.println("Works");
-    		}
-    	}//end try
-    	catch(FileNotFoundException e)
-    	{
-    		System.out.println("File not found.");
-    		System.exit(0);
-    	}
     	
-    	fileIO file = new fileIO();
-    	double [] numbers = file.newLine(scan);//Saves the numbers from the file into an array
+    	fileIO file = new fileIO("LetterInputs.txt","LetterOutputs.txt");
+    	double [] numbers = file.getLine(2);//Saves the numbers from the file into an array
+    	
+    	for(double i : numbers)
+    		System.out.println(i);
         
     	/*
         neural_network nn = new neural_network(2, 4, 1);
