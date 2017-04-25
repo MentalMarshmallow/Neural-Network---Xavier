@@ -72,6 +72,10 @@ public class Node {
         return InConnections;
     }
     
+    public Connection getConnection(int neuronIndex){
+        return findConnection.get(neuronIndex);
+    }
+    
     //Adds connections for an ArrayList of nodes
     public void addInConnections(ArrayList<Node> inNodes){
         for(Node n: inNodes)
