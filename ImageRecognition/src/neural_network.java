@@ -1,4 +1,18 @@
-//This class contains the neural network
+/*
+ * This class contains the neural network
+ * 
+ * What it looks like:
+ * 
+ * (In)---(Hidden)---(Out)
+ * 
+ * a1---a4---a7
+ * a2---a5---a8
+ * a3---a6---a9
+ * .    .    .
+ * .    .    .
+ * .    .    .
+ * ai---aj---ak
+ */
 import java.util.*;
 
 public class neural_network {
@@ -12,7 +26,7 @@ public class neural_network {
     final int[] layers;
 
     final double epsilon = 0.00000000001;
-    final double learningRate = 0.9f;
+    final double learningRate = 0.9f;//Note faster learning rate will decrease accuracy
     final double momentum = 0.7f;
     
     //inputs go here
@@ -174,9 +188,63 @@ public class neural_network {
 		    * Propagate what we expected through what we actually got.
 		    * This partially improves the results of the outputs
 		    */
-		   applyBackpropagation(expectedOutputs[p]); 
+		   backPropagation(expectedOutputs[p]); 
 	   }
 	   
+   }//end Run
+   
+   public void backPropagation(double expectedOutput[])
+   {
+	   
+	   int i=0;
+	   
+	   /*
+	    * Go through the outer layer nodes and 
+	    * correct the error 
+	    */
+	   for(Node outN : outputLayer)
+	   {
+		   ArrayList<Connection> connections = outN.getAllInConnections();
+		   for (Connection con : connections)
+		   {
+			   double ak = outN.getOutput();//Outer layer node
+			   double ai = con.leftNode.getOutput();//Input layer node
+			   double desiredOutput = expectedOutput[i];
+			   
+			   double gradient = -ak * (1-ak) * ai * (desiredOutput -ak);//The gradient at which the curve will go
+			   double deltaWeight = -learningRate * gradient;//At how fast you want the network to learn. 
+			   double newWeight = con.getWeight() + deltaWeight;
+			   
+			   con.setDeltaWeight(deltaWeight);
+			   con.setWeight(newWeight + ( momentum * con.getPrevDeltaWeight() ) ); 
+		   }
+		   i++;
+	   }
+	   
+	   //update weights for the hidden layer nodes
+	   for(Node hidN : outputLayer)
+	   {
+		   ArrayList<Connection> connections = hidN.getAllInConnections();
+		   for (Connection con : connections)
+		   {
+			   double aj = hidN.getOutput();//Hidden layer node
+			   double ai = con.leftNode.getOutput();//Input layer node
+			   
+			   double sumKoutputs =0;//Sum of the gradient outputs of the Output layer
+			   int j = 0;
+			   
+			   for(Node outN : outputLayer)
+			   {
+				   double wjk = outN.getConnection(hidN.id).getWeight();//Get the weight between this hidden layer node and the outer layer nodes
+				   double desiredOutput = (double) expectedOutput[j];
+				   double ak = outN.getOutput();
+				   
+				   j++;
+				   
+				   sumKoutputs = sumKoutputs + (-desiredOutput -ak ) * ak * (1 - ak) * wjk;
+			   }
+		   }
+	   }
    }
    
 }
