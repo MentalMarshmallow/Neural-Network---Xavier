@@ -243,7 +243,15 @@ public class neural_network {
 				   
 				   sumKoutputs = sumKoutputs + (-desiredOutput -ak ) * ak * (1 - ak) * wjk;
 			   }
+			   
+			   double partialDerivative = aj * (1 - aj) * ai * sumKoutputs;
+			   double deltaWeight = -learningRate * partialDerivative;
+			   double newWeight = con.getWeight() + deltaWeight;
+			   
+			   con.setDeltaWeight(deltaWeight);
+			   con.setWeight(newWeight + momentum * con.getPrevDeltaWeight());
 		   }
+		   
 	   }
    }
    
