@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 import processing.core.PApplet;
 /**
  * @author Vimal_Jain
@@ -60,7 +64,6 @@ public class HandWriting extends PApplet{
 	//Toggles a single tile to be green
 	void toggle(int x,int y)
 	{
-		System.out.println(x);
 		if(x>-1 && y>-1 && x<rows && y<cols)
 		{
 			board[y][x]=true;
@@ -101,5 +104,34 @@ public class HandWriting extends PApplet{
 	public static void main(String[] args) {
 		String[] a = {"MAIN"};
         PApplet.runSketch( a, new HandWriting());
+        
+        Scanner scan = null;
+    	try
+    	{
+    		String filename= "LetterOutputs.txt";	//Filename hardcoded here
+    		File f = new File(filename); 			//Creates a file pointer to the file
+    		scan = new Scanner(f);			//Create a scanner and point it to nothing
+    		if(f.canRead())
+    		{
+    			System.out.println("Works");
+    		}
+    	}//end try
+    	catch(FileNotFoundException e)
+    	{
+    		System.out.println("File not found.");
+    		System.exit(0);
+    	}
+    	
+    	fileIO file = new fileIO(scan);
+    	double [] numbers = file.newLine();
+    	for(double i:numbers)
+    	System.out.println(i);
+        
+    	/*
+        neural_network nn = new neural_network(2, 4, 1);
+        int maxRuns = 50000;
+        double minErrorCondition = 0.001;
+        nn.run(maxRuns, minErrorCondition);
+        */
 	}
 }

@@ -30,10 +30,10 @@ public class neural_network {
     final double momentum = 0.7f;
     
     //inputs go here
-    //final double inputs[][];
+    double inputs[][];
     
     //corresponding outputs go here
-    //final double expectedOutputs[][];
+    double expectedOutputs[][];
     double resultOutputs[][];//Set to dummy values starting off
     double output[];
     
@@ -182,13 +182,13 @@ public class neural_network {
 				   error += err;
 			   }
 			   
+			   /*
+			    * Propagate what we expected through what we actually got.
+			    * This partially improves the results of the outputs
+			    */
+			   backPropagation(expectedOutputs[k]); 
+			   
 		   }
-			
-		   /*
-		    * Propagate what we expected through what we actually got.
-		    * This partially improves the results of the outputs
-		    */
-		   backPropagation(expectedOutputs[p]); 
 	   }
 	   
    }//end Run
@@ -241,7 +241,7 @@ public class neural_network {
 				   
 				   j++;
 				   
-				   sumKoutputs = sumKoutputs + (-desiredOutput -ak ) * ak * (1 - ak) * wjk;
+				   sumKoutputs = sumKoutputs + (-(desiredOutput -ak ) * ak * (1 - ak) * wjk);
 			   }
 			   
 			   double partialDerivative = aj * (1 - aj) * ai * sumKoutputs;
