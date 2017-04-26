@@ -31,7 +31,7 @@ public class Node {
 	
 	public void calculateOutput()
 	{
-		double s = 0;//Sigmoid total for the node
+		double s=0;//Sigmoid total for the node
 		
 		for(Connection con : InConnections)//Getting the total weight*output for the Node
 		{
@@ -40,7 +40,6 @@ public class Node {
 			double input = prevNode.getOutput();//Get output from previous layer
 			
 			s = s + (weight*input);
-			
 		}
 		
 		s = s + (biasConnection.getWeight()*bias);
@@ -53,7 +52,8 @@ public class Node {
 	 */
 	double sigmoid(double s)
 	{
-		return 1.0 / (1.0 + Math.exp(s));
+			
+		return s=1.0/(1.0 + Math.exp(s));
 	}
 	
 	public double getBias() {

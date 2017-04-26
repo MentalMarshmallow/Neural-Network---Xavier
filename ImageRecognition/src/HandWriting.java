@@ -15,8 +15,14 @@ public class HandWriting extends PApplet{
 	
 	public void setup()
 	{
+		int number =2;//This is the number of pixels to be read
+		
 		file = new fileIO("LetterInputs.txt","LetterOutputs.txt");
-    	double [] numbers = file.getLine(1);//Saves the numbers from the file into an array
+		
+    	
+		double[] numbers= file.getLine(1);
+		
+    	//Get a double array of output values for each letter
     	
 		rows=60;
 		cols=60;
@@ -27,13 +33,13 @@ public class HandWriting extends PApplet{
 		pixels=new int[rows][cols];
 		boxsize=(width/rows)/2;
 		
-		double[][] pixels= file.readPixels();//Gets the pixels for letter A
+		double[][] pixels= file.readPixels(number);//Gets the pixels for letter A
 		
 		
-		neural_network nn = new neural_network(2, 4, 1);
+		neural_network nn = new neural_network(number, number, number,pixels,numbers);
         int maxRuns = 50000;
         double minErrorCondition = 0.001;
-        //nn.run(maxRuns, minErrorCondition);
+        nn.run(maxRuns, minErrorCondition);
 		
 		drawboard();
 	}

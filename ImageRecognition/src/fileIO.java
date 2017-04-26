@@ -115,14 +115,15 @@ public class fileIO {
 	 * Reads all pixels for every letter and places them in a 2d array.
 	 * Each row is a seperate letter in the Double format
 	 */
-	public double[][] readPixels()
+	public double[][] readPixels(int number)
 	{
 		int rows=60;
-		double [][] pixels = new double [rows][rows];
+		int cols=number;
+		double [][] pixels = new double [cols][(rows+1)*(rows+1)];
 		char [] letters={'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','W','X','Y','Z'};
 		
 		//Go through all the letters
-		for(int k=0;k<letters.length;k++)
+		for(int k=0;k<number;k++)
 		{
 			LetterInput=new File("data/" + letters[k] + ".txt");
 			
@@ -144,6 +145,8 @@ public class fileIO {
 			
 			String currentLine="";
 			
+			int count =0;//goes through the pixels
+			
 			for(int i=0;i<rows;i++)
 			{
 				currentLine = scanI.nextLine();//get current line
@@ -151,8 +154,10 @@ public class fileIO {
 				//go through the string
 				for(int j=0;j<currentLine.length();j++)
 				{
-					pixels[i][j] = Character.getNumericValue(currentLine.charAt(j));//Converts the currentLine to char to double
+					pixels[k][count] = Character.getNumericValue(currentLine.charAt(j));//Converts the currentLine to char to double
+					count++;
 				}
+				count++;
 				
 			}
 			

@@ -30,7 +30,7 @@ public class neural_network {
     final double momentum = 0.7f;
     
     //inputs go here
-    double inputs[][];
+    final double inputs[][];
     
     //corresponding outputs go here
     double expectedOutputs[][];
@@ -38,7 +38,29 @@ public class neural_network {
     double output[];
     
     //Constructor for a neural_network with 3 layers
-    public neural_network(int input,int hidden, int output){
+    public neural_network(int input,int hidden, int output,double [][] pixels, double[] outputs){
+    	
+    	inputs=pixels;
+    	
+    	int cols=outputs.length;
+    	expectedOutputs=new double[1][cols];
+    	
+    	for(int i=0;i<cols-1;i++)
+    	{
+    		expectedOutputs[0][i]=outputs[i];
+    	}
+    	
+    	resultOutputs=expectedOutputs;//This makes the outputs the same size
+    	
+    	//Change the inside of the outputs to -1 as a dummy initalize
+    	for(int i=0;i<resultOutputs.length;i++)
+    	{
+    		for(int j=0;j<resultOutputs[0].length;j++)
+    		{
+    			resultOutputs[i][j]=-1;
+    		}
+    	}
+    	
     	
     	this.layers = new int[] {input,hidden,output};//Number of Nodes for each layer
     	
@@ -69,10 +91,13 @@ public class neural_network {
     		}
     		else if(i==2)//Creating output layer nodes
     		{
-    			Node node = new Node();
-				node.addInConnections(hiddenLayer);
-				node.addBiasConnection(bias);
-				outputLayer.add(node);
+    			for(int j=0; j<layers[i];j++)
+    			{
+	    			Node node = new Node();
+					node.addInConnections(hiddenLayer);
+					node.addBiasConnection(bias);
+					outputLayer.add(node);
+    			}
     		}
     		else
     		{
@@ -120,6 +145,7 @@ public class neural_network {
    {
        for (int i = 0; i < inputLayer.size(); i++) 
        {
+    	   System.out.println(inputs[i]);
            inputLayer.get(i).setOutput(inputs[i]);//puts each input to an individual node
        }
    }
@@ -132,7 +158,6 @@ public class neural_network {
        {
     	   outputs[i] = outputLayer.get(i).getOutput();
        }
-       
        return outputs;
    }
    
@@ -161,15 +186,20 @@ public class neural_network {
 	   
 	   for(i=0 ;i<maxSteps && error>minError; i++)
 	   {
+		   
 		   error=0;//reset error
 		   
-		   for(int k=0;k<inputs.length;k++)//Set the inputs for the nodes
+		   for(int k=0;k<inputs.length-1;k++)//Set the inputs for the nodes
 		   {
 			   setInput(inputs[k]);
 			   
 			   activate();
 			   
 			   output = getOutput();
+			   
+			   for(double q: output)
+				  System.out.println(q);
+			   
 			   resultOutputs[k] = output;//Puts the results of the input in the output array
 			   
 			   /*
@@ -180,6 +210,7 @@ public class neural_network {
 			   {
 				   double err=Math.pow(output[j] - expectedOutputs[k][j], 2);//Squares the (resultOutput - expectedOutput)
 				   error += err;
+				   System.out.println(error);
 			   }
 			   
 			   /*
@@ -189,7 +220,10 @@ public class neural_network {
 			   backPropagation(expectedOutputs[k]); 
 			   
 		   }
+		   
 	   }
+	   
+	   printResult();
 	   
    }//end Run
    
@@ -255,5 +289,18 @@ public class neural_network {
 	   }
 	   
    }//End backPropagation
+   
+   void printResult()
+   {
+	   System.out.print("ACTUAL: ");
+	   for (int p = 0; p < inputs.length-1; p++)
+	   {
+		   System.out.println();
+		   for (int x = 0; x < layers[2]; x++) {
+		       System.out.print(resultOutputs[p][x] + " ");
+		   }
+		   
+	   }
+   }
    
 }//End Neural Network
