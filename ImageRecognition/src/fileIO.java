@@ -111,6 +111,7 @@ public class fileIO {
 		
 	}
 	
+	//Reads all pixels for every letter
 	public int [][] readPixels(String letter)
 	{
 		int rows=60;
@@ -144,7 +145,6 @@ public class fileIO {
 			for(int j=0;j<currentLine.length();j++)
 			{
 				pixels[i][j] = Character.getNumericValue(currentLine.charAt(j));//Converts the currentLine to char to int
-				System.out.println(pixels[i][j]);
 			}
 			
 		}

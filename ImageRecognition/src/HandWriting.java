@@ -16,7 +16,7 @@ public class HandWriting extends PApplet{
 	public void setup()
 	{
 		file = new fileIO("LetterInputs.txt","LetterOutputs.txt");
-    	//double [] numbers = file.getLine(2);//Saves the numbers from the file into an array
+    	double [] numbers = file.getLine(1);//Saves the numbers from the file into an array
     	
 		rows=60;
 		cols=60;
@@ -27,7 +27,29 @@ public class HandWriting extends PApplet{
 		pixels=new int[rows][cols];
 		boxsize=(width/rows)/2;
 		
-		int[][] pixels= file.readPixels("A");
+		int[][] pixels= file.readPixels("A");//Gets the pixels for letter A
+		int[] singleLetter=new int[rows*cols]; 
+		
+		int count=0;
+		for(int i=0;i<rows;i++)
+		{
+			for(int j=0;j<cols;j++)
+			{
+				singleLetter[count]=pixels[i][j];
+				count++;
+			}
+		}
+		
+		for(int i=0;i<singleLetter.length;i++)
+		{
+			System.out.println(singleLetter[i]);
+		}
+		
+		
+		neural_network nn = new neural_network(2, 4, 1);
+        int maxRuns = 50000;
+        double minErrorCondition = 0.001;
+        //nn.run(maxRuns, minErrorCondition);
 		
 		drawboard();
 	}
@@ -88,7 +110,7 @@ public class HandWriting extends PApplet{
 			//Write the pixels to a file
 			try
 			{
-				file.writePixels(pixels,"A");
+				file.writePixels(pixels,"Z");
 			}
 			catch(IOException e)
 			{
@@ -141,12 +163,5 @@ public class HandWriting extends PApplet{
 	public static void main(String[] args) {
 		String[] a = {"MAIN"};
         PApplet.runSketch( a, new HandWriting());
-        
-    	/*
-        neural_network nn = new neural_network(2, 4, 1);
-        int maxRuns = 50000;
-        double minErrorCondition = 0.001;
-        nn.run(maxRuns, minErrorCondition);
-        */
 	}
 }
