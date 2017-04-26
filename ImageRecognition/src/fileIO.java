@@ -19,21 +19,15 @@ public class fileIO {
 	fileIO(String input,String output)
 	{
 		LetterOutput = new File(output);
-		LetterInput = new File(input);
 		if(!LetterOutput.canRead())
 		{
 			System.out.println("Output file not found");
-		}
-		if(!LetterInput.canRead())
-		{
-			System.out.println("Input file not found");
 		}
 		
 		//Add the input and output scanners
 		try
 		{
     		scanO = new Scanner(LetterOutput);
-    		scanI = new Scanner(LetterInput);
     		
     	}//end try
     	catch(FileNotFoundException e)
@@ -80,19 +74,15 @@ public class fileIO {
 	 * Does this by reading the file and writing it to a temp file. Then adding whatever details are needed
 	 * then it destroys the original file and renames the temp file to the original file
 	 */
-	public void writePixels(int pixels[][],int inputNumber) throws FileNotFoundException, DirectoryNotEmptyException, NoSuchFileException, IOException
-	{	
-		int rows=60;
-		int lineCounter=0;//Counts the position of the line
-		
-		File temp = new File("temp.txt");//Create a temp file 
-		
+	public void writePixels(int pixels[][],String letter) throws FileNotFoundException, DirectoryNotEmptyException, NoSuchFileException, IOException
+	{
 		PrintWriter output=null;
+		
+		LetterInput=new File("data/" + letter + ".txt");
 		
 		try
 		{
-			output = new PrintWriter(temp);
-    		scanI = new Scanner(LetterInput);
+			output = new PrintWriter(LetterInput);
     		
     	}//end try
     	catch(FileNotFoundException e)
@@ -101,48 +91,63 @@ public class fileIO {
     		System.exit(0);
     	}
 		
-		//Move the scanner down inputNumber*cols lines and write them to the temp file
-		for(int i=0;i<(inputNumber-1)*rows;i++)
-		{
-			output.println(scanI.nextLine());//outputs the line in the original file
-			System.out.println(lineCounter);
-			lineCounter++;
-		}
-		
 		//Outputs the pixels array to the text file
 		for(int i=0;i<pixels[0].length;i++)
 		{
-			StringBuilder builder = new StringBuilder();
-			for (int j : pixels[i]) {
+			StringBuilder builder = new StringBuilder();//Making a string
+			
+			//Go through the array and append to a string
+			for (int j : pixels[i]) 
+			{
 			  builder.append(j);
 			}
 			String text = builder.toString();
 			
 			output.println(text);
-			System.out.println(text);
-			lineCounter++;
 		}
 		
-		//Add the rest of the lines. 26 as there are 26 letters
-		for(int i=lineCounter;i<rows*1;i++)
-		{
-			output.println(scanI.nextLine());
-		}
-		
-		LetterInput=temp;
-		
-		if(LetterInput.delete())//Delete the original file
-		{
-			temp.renameTo(LetterInput);//Rename the temp file to the original file name
-			LetterInput=temp;//add temp as the new Input file
-		}
-		else
-		{
-			System.out.println(temp);
-		}
-		
-		
+		scanI.close();
 		output.close();
 		
+	}
+	
+	public int [][] readPixels(String letter)
+	{
+		int rows=60;
+		
+		LetterInput=new File("data/" + letter + ".txt");
+		int [][] pixels = new int [rows][rows];
+		
+		if(!LetterInput.canRead())
+		{
+			System.out.println("Input file not found");
+		}
+		
+		
+		try
+		{
+			scanI=new Scanner(LetterInput);
+    	}//end try
+    	catch(FileNotFoundException e)
+    	{
+    		System.out.println("File not found.");
+    		System.exit(0);
+    	}
+		
+		String currentLine="";
+		
+		for(int i=0;i<rows;i++)
+		{
+			currentLine = scanI.nextLine();//get current line
+			
+			//go through the string
+			for(int j=0;j<currentLine.length();j++)
+			{
+				pixels[i][j] = Character.getNumericValue(currentLine.charAt(j));//Converts the currentLine to char to int
+				System.out.println(pixels[i][j]);
+			}
+			
+		}
+		return pixels;
 	}
 }

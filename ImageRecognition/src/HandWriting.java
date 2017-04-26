@@ -16,10 +16,7 @@ public class HandWriting extends PApplet{
 	public void setup()
 	{
 		file = new fileIO("LetterInputs.txt","LetterOutputs.txt");
-    	double [] numbers = file.getLine(2);//Saves the numbers from the file into an array
-    	
-    	for(double i : numbers)
-    		System.out.println(i);
+    	//double [] numbers = file.getLine(2);//Saves the numbers from the file into an array
     	
 		rows=60;
 		cols=60;
@@ -29,6 +26,8 @@ public class HandWriting extends PApplet{
 		temp=new boolean[rows][cols];
 		pixels=new int[rows][cols];
 		boxsize=(width/rows)/2;
+		
+		int[][] pixels= file.readPixels("A");
 		
 		drawboard();
 	}
@@ -85,9 +84,11 @@ public class HandWriting extends PApplet{
 				}
 			}
 			System.out.println("Saved the board");
+			
+			//Write the pixels to a file
 			try
 			{
-				file.writePixels(pixels,0);
+				file.writePixels(pixels,"A");
 			}
 			catch(IOException e)
 			{
