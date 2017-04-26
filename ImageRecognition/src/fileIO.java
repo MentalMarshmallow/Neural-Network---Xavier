@@ -111,43 +111,54 @@ public class fileIO {
 		
 	}
 	
-	//Reads all pixels for every letter
-	public int [][] readPixels(String letter)
+	/*
+	 * Reads all pixels for every letter and places them in a 2d array.
+	 * Each row is a seperate letter in the Double format
+	 */
+	public double[][] readPixels()
 	{
 		int rows=60;
+		double [][] pixels = new double [rows][rows];
+		char [] letters={'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','W','X','Y','Z'};
 		
-		LetterInput=new File("data/" + letter + ".txt");
-		int [][] pixels = new int [rows][rows];
-		
-		if(!LetterInput.canRead())
+		//Go through all the letters
+		for(int k=0;k<letters.length;k++)
 		{
-			System.out.println("Input file not found");
-		}
-		
-		
-		try
-		{
-			scanI=new Scanner(LetterInput);
-    	}//end try
-    	catch(FileNotFoundException e)
-    	{
-    		System.out.println("File not found.");
-    		System.exit(0);
-    	}
-		
-		String currentLine="";
-		
-		for(int i=0;i<rows;i++)
-		{
-			currentLine = scanI.nextLine();//get current line
+			LetterInput=new File("data/" + letters[k] + ".txt");
 			
-			//go through the string
-			for(int j=0;j<currentLine.length();j++)
+			if(!LetterInput.canRead())
 			{
-				pixels[i][j] = Character.getNumericValue(currentLine.charAt(j));//Converts the currentLine to char to int
+				System.out.println("Input file not found");
 			}
 			
-		}
+			
+			try
+			{
+				scanI=new Scanner(LetterInput);
+	    	}//end try
+	    	catch(FileNotFoundException e)
+	    	{
+	    		System.out.println("File not found.");
+	    		System.exit(0);
+	    	}
+			
+			String currentLine="";
+			
+			for(int i=0;i<rows;i++)
+			{
+				currentLine = scanI.nextLine();//get current line
+				
+				//go through the string
+				for(int j=0;j<currentLine.length();j++)
+				{
+					pixels[i][j] = Character.getNumericValue(currentLine.charAt(j));//Converts the currentLine to char to double
+				}
+				
+			}
+			
+		}//End letters
+		
+		
 		return pixels;
 	}
 }

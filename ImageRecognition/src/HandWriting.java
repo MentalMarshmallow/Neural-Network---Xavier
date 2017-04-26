@@ -27,23 +27,7 @@ public class HandWriting extends PApplet{
 		pixels=new int[rows][cols];
 		boxsize=(width/rows)/2;
 		
-		int[][] pixels= file.readPixels("A");//Gets the pixels for letter A
-		int[] singleLetter=new int[rows*cols]; 
-		
-		int count=0;
-		for(int i=0;i<rows;i++)
-		{
-			for(int j=0;j<cols;j++)
-			{
-				singleLetter[count]=pixels[i][j];
-				count++;
-			}
-		}
-		
-		for(int i=0;i<singleLetter.length;i++)
-		{
-			System.out.println(singleLetter[i]);
-		}
+		double[][] pixels= file.readPixels();//Gets the pixels for letter A
 		
 		
 		neural_network nn = new neural_network(2, 4, 1);
